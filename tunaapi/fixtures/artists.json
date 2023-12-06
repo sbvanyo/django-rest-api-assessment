@@ -1,0 +1,21 @@
+[
+  {
+      "model": "tunaapi.artist",
+      "pk": 123,
+      "fields": {
+          "name": "Artist 1",
+          "age": 25,
+          "bio": "Bio 1"
+      }
+  },
+  {
+      "model": "tunaapi.artist",
+      "pk": 456,
+      "fields": {
+          "name": "Artist 2",
+          "age": 30,
+          "bio": "Bio 2"
+  
+      }
+  }
+]

@@ -1,0 +1,16 @@
+[
+  {
+      "model": "tunaapi.genre",
+      "pk": 123,
+      "fields": {
+          "description": "Genre 1"
+      }
+  },
+  {
+      "model": "tunaapi.genre",
+      "pk": 456,
+      "fields": {
+          "description": "Genre 2"
+      }
+  }
+]

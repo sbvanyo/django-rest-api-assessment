@@ -50,7 +50,30 @@ class SongView(ViewSet):
             artist=artist,
         )
         serializer = SongSerializer(song)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+      
+    ########################
+    ######## UPDATE ########
+    ########################
+    
+    def update(self, request, pk):
+        """Handle PUT requests for a song
+
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+
+        song = Song.objects.get(pk=pk)
+        song.title = request.data["title"]
+        song.album = request.data["album"]
+        song.length = request.data["length"]
+
+        artist_id = Artist.objects.get(pk=request.data["artist_id"])
+        song.artist = artist_id
+        song.save()
+
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
 
 
 class SongSerializer(serializers.ModelSerializer):
@@ -59,4 +82,4 @@ class SongSerializer(serializers.ModelSerializer):
     class Meta:
         model = Song
         fields = ('id', 'title', 'album', 'length', 'artist')
-        # depth = 1
+        depth = 1

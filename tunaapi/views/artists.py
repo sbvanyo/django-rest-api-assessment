@@ -48,7 +48,7 @@ class ArtistView(ViewSet):
             bio=request.data["bio"],
         )
         serializer = ArtistSerializer(artist)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
     ########################

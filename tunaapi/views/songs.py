@@ -50,7 +50,7 @@ class SongView(ViewSet):
             artist=artist,
         )
         serializer = SongSerializer(song)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
       
     ########################
     ######## UPDATE ########

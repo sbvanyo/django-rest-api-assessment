@@ -29,6 +29,24 @@ class GenreView(ViewSet):
         
         serializer = GenreSerializer(genres, many=True)
         return Response(serializer.data)
+      
+      
+    ########################
+    ######## CREATE ########
+    ########################
+      
+    def create(self, request):
+        """Handle POST operations
+
+        Returns
+            Response -- JSON serialized genre instance
+        """
+
+        genre = Genre.objects.create(
+            description=request.data["description"],
+        )
+        serializer = GenreSerializer(genre)
+        return Response(serializer.data)
 
 
 

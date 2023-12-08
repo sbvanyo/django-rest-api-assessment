@@ -29,6 +29,26 @@ class ArtistView(ViewSet):
         
         serializer = ArtistSerializer(artists, many=True)
         return Response(serializer.data)
+      
+    
+    ########################
+    ######## CREATE ########
+    ########################
+    
+    def create(self, request):
+        """Handle POST operations
+
+        Returns
+            Response -- JSON serialized artist instance
+        """
+
+        artist = Artist.objects.create(
+            name=request.data["name"],
+            age=request.data["age"],
+            bio=request.data["bio"],
+        )
+        serializer = ArtistSerializer(artist)
+        return Response(serializer.data)
 
 
 

@@ -39,10 +39,8 @@ class ArtistView(ViewSet):
         """Handle POST operations
 
         Returns
-            Response -- JSON serialized game instance
+            Response -- JSON serialized artist instance
         """
-        # gamer = Gamer.objects.get(uid=request.data["userId"])
-        # game_type = GameType.objects.get(pk=request.data["gameType"])
 
         artist = Artist.objects.create(
             name=request.data["name"],

@@ -26,15 +26,14 @@ class GenreView(ViewSet):
             Response -- JSON serialized list of genres
         """
         genres = Genre.objects.all()
-        
+
         serializer = GenreSerializer(genres, many=True)
         return Response(serializer.data)
-      
-      
+
     ########################
     ######## CREATE ########
     ########################
-      
+
     def create(self, request):
         """Handle POST operations
 
@@ -67,6 +66,17 @@ class GenreView(ViewSet):
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)
 
+
+    ########################
+    ######## DELETE ########
+    ########################
+
+    def destroy(self, request, pk):
+        """Handle delete requests for a genre"""
+
+        genre = Genre.objects.get(pk=pk)
+        genre.delete()
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
 
 class GenreSerializer(serializers.ModelSerializer):
     """JSON serializer for genres

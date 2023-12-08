@@ -26,7 +26,7 @@ class SongView(ViewSet):
             Response -- JSON serialized list of songs
         """
         songs = Song.objects.all()
-        
+
         serializer = SongSerializer(songs, many=True)
         return Response(serializer.data)
 
@@ -34,7 +34,7 @@ class SongView(ViewSet):
     ########################
     ######## CREATE ########
     ########################
-    
+
     def create(self, request):
         """Handle POST operations
 
@@ -51,11 +51,11 @@ class SongView(ViewSet):
         )
         serializer = SongSerializer(song)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-      
+
     ########################
     ######## UPDATE ########
     ########################
-    
+
     def update(self, request, pk):
         """Handle PUT requests for a song
 
@@ -72,6 +72,17 @@ class SongView(ViewSet):
         song.artist = artist_id
         song.save()
 
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+    ########################
+    ######## DELETE ########
+    ########################
+
+    def destroy(self, request, pk):
+        """Handle delete requests for a song"""
+
+        song = Song.objects.get(pk=pk)
+        song.delete()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
 
 

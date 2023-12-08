@@ -51,6 +51,28 @@ class ArtistView(ViewSet):
         return Response(serializer.data)
 
 
+    ########################
+    ######## UPDATE ########
+    ########################
+    
+    def update(self, request, pk):
+        """Handle PUT requests for an artist
+
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+
+        artist = Artist.objects.get(pk=pk)
+        artist.name = request.data["name"]
+        artist.age = request.data["age"]
+        artist.bio = request.data["bio"]
+
+        # game_type = GameType.objects.get(pk=request.data["gameType"])
+        # game.game_type = game_type
+        artist.save()
+
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
 
 class ArtistSerializer(serializers.ModelSerializer):
     """JSON serializer for artists

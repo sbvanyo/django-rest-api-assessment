@@ -71,6 +71,17 @@ class ArtistView(ViewSet):
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)
 
+    ########################
+    ######## DELETE ########
+    ########################
+
+    def destroy(self, request, pk):
+        """Handle delete requests for an artist"""
+
+        artist = Artist.objects.get(pk=pk)
+        artist.delete()
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
 
 class ArtistSerializer(serializers.ModelSerializer):
     """JSON serializer for artists

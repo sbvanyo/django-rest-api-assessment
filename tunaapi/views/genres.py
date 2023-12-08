@@ -49,6 +49,24 @@ class GenreView(ViewSet):
         return Response(serializer.data)
 
 
+    ########################
+    ######## UPDATE ########
+    ########################
+
+    def update(self, request, pk):
+        """Handle PUT requests for a genre
+
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+
+        genre = Genre.objects.get(pk=pk)
+        genre.description = request.data["description"]
+
+        genre.save()
+
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
 
 class GenreSerializer(serializers.ModelSerializer):
     """JSON serializer for genres

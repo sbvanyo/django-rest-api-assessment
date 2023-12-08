@@ -54,7 +54,7 @@ class ArtistView(ViewSet):
     ########################
     ######## UPDATE ########
     ########################
-    
+   
     def update(self, request, pk):
         """Handle PUT requests for an artist
 
@@ -67,8 +67,6 @@ class ArtistView(ViewSet):
         artist.age = request.data["age"]
         artist.bio = request.data["bio"]
 
-        # game_type = GameType.objects.get(pk=request.data["gameType"])
-        # game.game_type = game_type
         artist.save()
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)

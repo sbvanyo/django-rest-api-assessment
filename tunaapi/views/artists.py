@@ -3,7 +3,7 @@ from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from tunaapi.models import Artist
+from tunaapi.models import Artist, Song
 
 
 class ArtistView(ViewSet):
@@ -29,23 +29,27 @@ class ArtistView(ViewSet):
         
         serializer = ArtistSerializer(artists, many=True)
         return Response(serializer.data)
-      
-    
+
+
     ########################
     ######## CREATE ########
     ########################
-    
+
     def create(self, request):
         """Handle POST operations
 
         Returns
             Response -- JSON serialized artist instance
         """
+        
+        songs = Song.objects.get(pk=request.data["song"])
 
         artist = Artist.objects.create(
             name=request.data["name"],
             age=request.data["age"],
             bio=request.data["bio"],
+            song_count=request.data["song_count"],
+            songs=songs
         )
         serializer = ArtistSerializer(artist)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -54,7 +58,7 @@ class ArtistView(ViewSet):
     ########################
     ######## UPDATE ########
     ########################
-   
+
     def update(self, request, pk):
         """Handle PUT requests for an artist
 
@@ -66,6 +70,7 @@ class ArtistView(ViewSet):
         artist.name = request.data["name"]
         artist.age = request.data["age"]
         artist.bio = request.data["bio"]
+        artist.song_count = request.data["song_count"]
 
         artist.save()
 
@@ -88,4 +93,5 @@ class ArtistSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Artist
-        fields = ('id', 'name', 'age', 'bio')
+        fields = ('id', 'name', 'age', 'bio', 'song_count', 'songs')
+        depth = 1

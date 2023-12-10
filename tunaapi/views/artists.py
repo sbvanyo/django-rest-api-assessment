@@ -26,7 +26,7 @@ class ArtistView(ViewSet):
             Response -- JSON serialized list of artists
         """
         artists = Artist.objects.all()
-        
+
         serializer = ArtistSerializer(artists, many=True)
         return Response(serializer.data)
 
@@ -41,7 +41,7 @@ class ArtistView(ViewSet):
         Returns
             Response -- JSON serialized artist instance
         """
-        
+
         songs = Song.objects.get(pk=request.data["song"])
 
         artist = Artist.objects.create(
@@ -91,7 +91,11 @@ class ArtistView(ViewSet):
 class ArtistSerializer(serializers.ModelSerializer):
     """JSON serializer for artists
     """
+    song_count = serializers.SerializerMethodField()
     class Meta:
         model = Artist
         fields = ('id', 'name', 'age', 'bio', 'song_count', 'songs')
         depth = 1
+    def get_song_count(self, obj):
+        """Counts number of artist's songs"""
+        return obj.songs.count()
